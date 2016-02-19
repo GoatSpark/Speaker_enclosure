@@ -46,7 +46,7 @@ module driverHole() {
 // driverScrews() creates the driver screw hole shape
 module driverScrews() {
     $fn = 100;
-    translate([1.77, .25, 0]) rotate([90, 0, 0]) cylinder(0.5, 0.046875, 0.046875, false);
+    translate([1.77, .25, 0]) rotate([90, 0, 0]) cylinder(0.5, 0.05469, 0.05469, false);
 }
 
 // centerScrews() creates 6 screw shapes and centers them around the driver hole (coordinates hard-coded)
@@ -68,7 +68,7 @@ module terminal() {
 module terminalHoles() {
     $fn = 100;
     translate([0.6, 0.25, 0.6]) rotate([90, 0, 0])
-    cylinder(0.5, 0.046875, 0.046875, false);
+    cylinder(0.5, 0.03906, 0.03906, false);
 }
 
 // centerTermHoles creates 4 terminal screw shapes and centers them around the terminal (coordinates hard-coded)
