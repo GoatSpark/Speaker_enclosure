@@ -11,6 +11,28 @@ module compileParts() {
     addScrews();
 }
 
+module minusParts() {
+    $fn = 100;
+    // Inside box
+    insideBox();
+    
+    // Driver
+    driverHole();
+    
+    // Terminal
+    terminal();
+    
+    // Drivers screws
+    translate([2.75, 0, 3]) centerScrews();
+    
+    // Terminal screws
+    translate([2.5, 4, 3.5]) centerTermHoles();
+}
+
+module insideBox() {
+    translate([0.2, 0.2, 0.2]) cube([4.6, 3.6, 6.6]);
+}
+
 // makeBox() creates 5x7x4 hollow box
 module makeBox() {
     difference() {cube([5, 4, 7], false); 
@@ -27,7 +49,7 @@ module driverHole() {
 // DdriverScrews() creates the screw hole shape
 module driverScrews() {
     $fn = 100;
-    translate([1.77, .25, 0]) rotate([90, 0, 0]) cylinder(0.5, 0.0615, 0.0615, false);
+    translate([1.77, .25, 0]) rotate([90, 0, 0]) cylinder(0.5, 0.046875, 0.046875, false);
 }
 
 // addDriver() adds the hole to the hollow box
@@ -56,9 +78,31 @@ module centerScrews() {
     rotate([0, 300, 0]) driverScrews();
 }
 
-module addScrews() {
+module terminalHoles() {
+    $fn = 100;
+    translate([0.6, 0.25, 0.6]) rotate([90, 0, 0])
+    cylinder(0.5, 0.046875, 0.046875, false);
+}
+
+module centerTermHoles() {
+    terminalHoles();
+    translate([0, 0, -1.2]) terminalHoles();
+    translate([-1.2, 0, -1.2]) terminalHoles();
+    translate([-1.2, 0, 0]) terminalHoles();
+}
+module addScrews1() {
+    // driverscrews
    difference() {addTerminal(); translate([2.75, 0, 3])centerScrews(); }; 
 }
-compileParts();
+
+// Terminal screws
+module addScrews2() {
+    difference() {addScrews1(); translate([2.5, 4, 3.5]) centerTermHoles(); };
+}
+
+// compileParts();
 //driverHole();
 // centerScrews();
+// addScrews2();
+// translate([2.5, 4, 3]) centerTermHoles();
+minusParts();
