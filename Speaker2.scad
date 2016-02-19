@@ -5,9 +5,10 @@
 // It's currently in a weird order
 
 // compileParts() takes all of the individual shapes and compiles them together
-module compileParts() {
+module compileExterior() {
     difference() {outsideBox(); minusParts();};
 }
+
 
 // Adds all the parts to be transformed into holes
 module minusParts() {
@@ -79,4 +80,58 @@ module centerTermHoles() {
     translate([-1.2, 0, 0]) terminalHoles();
 }
 
-compileParts();
+module plusInterior() {
+    translate([0, 1, 0]) verticalPlane();
+    translate([0, 3, 0]) verticalPlane();
+    translate([0, 0, 1]) horizontalPlane();
+    translate([0, 0, 5]) horizontalPlane();    
+    
+}
+    
+    
+    
+module verticalPlane() {
+    cube([5,.2,7]);
+}
+
+module horizontalPlane() {
+    cube([5, 4, .2]);
+}
+
+module verticalCylinder(xval) {
+    translate([xval, 2.25, .5])
+    cylinder(5, .4, .4, false);
+}
+
+module horizontalHoles(xdim, zdim) {
+    translate([xdim, 3.5, zdim])
+    rotate([90, 0, 0])
+    cylinder(3, .3, .3, false);
+}
+
+module minusInterior() {
+    $fn = 100;
+    
+    rotate([90, 0, 0])
+    translate([2.75, 3, -3.5])
+    cylinder(3, 1.6, 1.6, false);
+    
+    verticalCylinder(1.25);
+    verticalCylinder(3.25);
+    horizontalHoles(1.25, 6);
+    horizontalHoles(4, 6);
+    horizontalHoles(1.25, .6);
+    horizontalHoles(4, .7);
+}
+
+module compileInterior() {
+    difference() {plusInterior(); minusInterior();};
+}
+//compileInterior();
+
+module compileFinal() {
+    union() {compileInterior(); compileExterior();};
+}
+compileFinal();
+
+    
